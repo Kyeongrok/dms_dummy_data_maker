@@ -1,0 +1,9 @@
+id: dw_1438_20190513_190315_mobis
+configuration: mobis
+peername: None
+login_id: Driver Unavailable
+time: 2019_05_13_19:03_15
+vin: 000000
+route: 000
+
+
