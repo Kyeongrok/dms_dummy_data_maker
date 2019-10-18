@@ -1,34 +1,22 @@
-import datetime
-import random
+from datetime import datetime
+from elasticsearch import Elasticsearch
+from src.make_as_is_data import makeLogObject
 from src.aux_info_maker import makeAuxInfo
 
+es = Elasticsearch() # 기본값 localhost
+# elastic search 서버를 바꾸고 싶으면 아래 hosts값을 해당 server ip또는 domain으로 바꿔준다.
+#es = Elasticsearch(hosts=["ec2-54-180-123-238.ap-northeast-2.compute.amazonaws.com"])
 
-def makeLogObject(now):
-    logItems = [
-        {"key": "RoadBoundry", "value": ["Pole-Group(Traffic Cone Group)", "Unknown or Multiple Case"]},
-        {"key": "Cyclist", "value": ["Bicycle"]},
-        {"key": "Motorcyclist", "value": ["Motorcycle"]},
-        {"key": "RoadHazard", "value": ["Traffic Cone", "Unknown"]},
-        {"key": "StructuralElement", "value": ["Turnnel"]},
-        {"key": "RoadSurface", "value": ["Puddle"]},
-        {"key": "Pedestrian", "value": ["Unknown"]}
-    ]
-    rndItem = lambda list: list[random.randint(0, len(list)-1)]
-    logItem = rndItem(logItems)
-    level2logItems = logItem['value']
-    formattedDate = now.strftime("%Y-%m-%d %H:%M:%S.%f")
-    return {"datetime":formattedDate, "level1":logItem['key'], "level2":rndItem(level2logItems)}
+es.indices.create(index="log_object")
 
-def makeLogObjects():
-    # aux_info를 생성한다
-    # aux_info의 id를 key로 넣는다.
-    # aux_info를 만들었으면 파일로 생성한다.
-    file = open("./log.txt", "w+")
-    now = datetime.datetime.now()
-    for i in range(30):
-        now += datetime.timedelta(seconds=random.randint(1, 100))
-        logObj = makeLogObject(now)
-        file.write("{},{},{}\n".format(now,logObj["level1"], logObj["level2"]))
-    file.close()
+# 개수를 조절 할 수 있다. 지금은 1000개를 넣는다.
+for i in range(1000):
+    now = datetime.now()
+    logObj = makeLogObject(now)
+    aux_info = makeAuxInfo()
+    logObj.update(aux_info)
+    res = es.create(index="log_object", id=aux_info['id'], body=logObj)
+    print(i, res)
+# 대전으로 가는 길에 뭐가 가장 많은가?
 
 

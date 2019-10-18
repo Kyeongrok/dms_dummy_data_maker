@@ -1,28 +1,34 @@
 import datetime
 import random
-import uuid
+from src.aux_info_maker import makeAuxInfo
 
 
-def makeAsIsData():
+def makeLogObject(now):
     logItems = [
-        {"key": "test_car_no", "value": ["N333444", "N555666", "N223456", "N123457"]},
-        {"key": "data_maker", "value": ["HMC","Mobis","Partners"]},
-        {"key": "team_code", "value": ["1259", "1438", "2347", "1249"]},
-        {"key": "target_system", "value": ["HDR", "Robotaxi", "SVM", "boopum1"]},
-        {"key": "sensors", "value": ["FR_C_LDR", "RR_C_LDR", "RF_LDR", "RF_MD_LDR", "RF_SD_LDR", "INT_LDR"]},
-        {"key": "ladir_count", "value": [1,2,3,4,5]},
-        {"key": "location", "value": ["seoul","uiwang","pangyo","sejong","etc"]}
+        {"key": "RoadBoundry", "value": ["Pole-Group(Traffic Cone Group)", "Unknown or Multiple Case"]},
+        {"key": "Cyclist", "value": ["Bicycle"]},
+        {"key": "Motorcyclist", "value": ["Motorcycle"]},
+        {"key": "RoadHazard", "value": ["Traffic Cone", "Unknown"]},
+        {"key": "StructuralElement", "value": ["Turnnel"]},
+        {"key": "RoadSurface", "value": ["Puddle"]},
+        {"key": "Pedestrian", "value": ["Unknown"]}
     ]
     rndItem = lambda list: list[random.randint(0, len(list)-1)]
-    obj = {}
+    logItem = rndItem(logItems)
+    level2logItems = logItem['value']
+    formattedDate = now.strftime("%Y-%m-%d %H:%M:%S.%f")
+    return {"datetime":formattedDate, "level1":logItem['key'], "level2":rndItem(level2logItems)}
 
-    for logItem in logItems:
-        obj[logItem['key']] = rndItem(logItem['value'])
-        formattedDate = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-        obj["datetime"] = formattedDate
-        obj["id"] = uuid.uuid1()
-        obj["data_volume"] = random.randint(1, 2)
-
-    return obj
+def makeLogObjects():
+    # aux_info를 생성한다
+    # aux_info의 id를 key로 넣는다.
+    # aux_info를 만들었으면 파일로 생성한다.
+    file = open("./log.txt", "w+")
+    now = datetime.datetime.now()
+    for i in range(30):
+        now += datetime.timedelta(seconds=random.randint(1, 100))
+        logObj = makeLogObject(now)
+        file.write("{},{},{}\n".format(now,logObj["level1"], logObj["level2"]))
+    file.close()
 
 
