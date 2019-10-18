@@ -11,7 +11,7 @@ from src.make_file_io import makeFileIo
 
 home = expanduser("~")
 print("home dir:", home)
-es = Elasticsearch(hosts=["ec2-54-180-123-238.ap-northeast-2.compute.amazonaws.com"])
+es = Elasticsearch(hosts=["ec2-13-125-237-227.ap-northeast-2.compute.amazonaws.com"])
 # es.indices.create(index="ingest_log")
 
 def makeMetaInfo():

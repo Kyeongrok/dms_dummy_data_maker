@@ -1,9 +1,7 @@
-import time
 from datetime import datetime
 from elasticsearch import Elasticsearch
-from src.make_log_object import makeLogObject
+from run_make_as_is_data import makeLogObject
 from src.aux_info_maker import makeAuxInfo
-import json
 
 es = Elasticsearch(hosts=["ec2-54-180-123-238.ap-northeast-2.compute.amazonaws.com"])
 # es = Elasticsearch()
