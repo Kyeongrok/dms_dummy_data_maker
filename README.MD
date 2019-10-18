@@ -29,3 +29,15 @@
 3. python3 run_ingest.py 를 실행한다.
 * 이렇게 하면 ingest되는 과정이 보인다.
 
+## Mobis용으로 참조한 파일
+해당 파일은 실제 파일이 아니고 더미데이터 생성기를 돌려서 만든 파일이다.
+```
+refer_files/aux_info.txt
+refer_files/log.csv
+```
+위 2개 파일을 참조하여 as 더미 데이터 생성기를 만들었다.
+
+```
+refer_files/asis.json
+```
+위 파일을 참조하여 to be 더미 데이터 생성기를 만들었다. 
