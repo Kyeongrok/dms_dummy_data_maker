@@ -12,7 +12,10 @@ from src.make_file_io import makeFileIo
 home = expanduser("~")
 print("home dir:", home)
 # elastic search가 올라가 있는 서버의 ip또는 domain으로 바꾼다.
-es = Elasticsearch(hosts=["ec2-13-125-237-227.ap-northeast-2.compute.amazonaws.com"])
+#es = Elasticsearch(hosts=["c2-13-125-237-227.ap-northeast-2.compute.amazonaws.com"])
+
+# 기본값은 localhost이다.
+es = Elasticsearch()
 # es.indices.create(index="ingest_log")
 
 def makeMetaInfo():
