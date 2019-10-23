@@ -6,7 +6,7 @@ def getPassword():
 	return ""
 
 def convertByteToTera(byte):
-	return byte / 1024 / 1024 / 1024
+	return byte / 1024 / 1024 / 1024 / 1024
 
 def getApiResponse(query):
 	# id와 pw를 바꾼다.
