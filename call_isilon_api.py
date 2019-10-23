@@ -36,10 +36,10 @@ class ApiCaller():
 		return convertMeasure(result['stats'][0]['value'], -3)
 
 	def getAvailFreeTotal(self):
-		avail = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.avail")
-		free = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.free")
-		used = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.used")
-		total = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.total")
+		avail = self.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.avail")
+		free = self.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.free")
+		used = self.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.used")
+		total = self.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.total")
 		return {"id":"{}".format(uuid.uuid1()), "avail":avail, "free":free, "total":total, "used":used}
 
 
