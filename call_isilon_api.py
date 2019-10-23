@@ -1,4 +1,4 @@
-import http.client, json, ssl, base64
+import http.client, json, ssl, base64, uuid
 
 def getPassword():
 	# rsa방식 등의 암호화 된 코드를
@@ -30,15 +30,26 @@ class ApiCaller():
 		res = conn.getresponse()
 		return res
 
+	def getApiResultValue(self, query):
+		res = self.getApiResponse(query)
+		result = json.loads(res.read().decode('utf-8'))
+		return convertByteToTera(result['stats'][0]['value'])
+
+	def getAvailFreeTotal(self):
+		avail = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.avail")
+		free = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.free")
+		total = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.total")
+		return {"id":uuid.uuid1(), "avail":avail, "free":free, "total":total}
+
+
 apiCaller = ApiCaller("10.35.106.35", "root", "a")
+
 
 #/platform/1/statistics/current?key=node.sysfs.root.bytes.used
 #/platform/1/statistics/current?key=node.sysfs.var.percent.free
 # res = getApiResponse("/platform/5/statistics/current?key=cluster.alert.info")
-res = apiCaller.getApiResponse("/platform/5/statistics/current?key=ifs.bytes.avail")
-data = res.read()
-result = json.loads(data.decode('utf-8'))
-#print(res.status, res.reason)
-#print(res.getheaders())
-print(result)
-print(convertByteToTera(result['stats'][0]['value']))
+
+res = apiCaller.getAvailFreeTotal()
+print(res)
+
+
