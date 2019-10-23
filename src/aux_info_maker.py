@@ -1,5 +1,6 @@
 import datetime
 from random import randint
+import uuid
 
 def makeAuxInfo():
     # id생성하기
@@ -11,7 +12,7 @@ def makeAuxInfo():
     now = datetime.datetime.now()
     formattedDate = now.strftime("%Y%m%d_%H%M%S%_%f")
 
-    dict = {"id":"dw_{}_{}".format(vin, formattedDate),
+    dict = {"id":uuid.uuid1(),
             "configuration":configurations[randint(0, len(configurations) - 1)],
             "login_id":login_ids[randint(0, len(login_ids) - 1)],
             "time":formattedDate,
