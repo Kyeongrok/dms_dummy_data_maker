@@ -5,8 +5,8 @@ def getPassword():
 	# 인증서버에 공개키를 등록 해놓고 디코딩 해서 password를 만든다.
 	return ""
 
-def convertByteToTera(byte):
-	return byte * (1024 ** -4)
+def convertMeasure(byte, power):
+	return byte * (1024 ** power)
 
 class ApiCaller():
 	host = "10.35.106.35"
@@ -33,7 +33,7 @@ class ApiCaller():
 	def getApiResultValue(self, query):
 		res = self.getApiResponse(query)
 		result = json.loads(res.read().decode('utf-8'))
-		return convertByteToTera(result['stats'][0]['value'])
+		return convertMeasure(result['stats'][0]['value'], -3)
 
 	def getAvailFreeTotal(self):
 		avail = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.avail")
