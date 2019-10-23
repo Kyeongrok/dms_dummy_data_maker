@@ -39,7 +39,7 @@ class ApiCaller():
 		avail = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.avail")
 		free = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.free")
 		total = apiCaller.getApiResultValue("/platform/5/statistics/current?key=ifs.bytes.total")
-		return {"id":uuid.uuid1(), "avail":avail, "free":free, "total":total}
+		return {"id":"{}".format(uuid.uuid1()), "avail":avail, "free":free, "total":total}
 
 
 apiCaller = ApiCaller("10.35.106.35", "root", "a")
