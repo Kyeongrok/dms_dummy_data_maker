@@ -6,7 +6,7 @@ def getPassword():
 	return ""
 
 def convertByteToTera(byte):
-	return byte / 1000 / 1000 / 1000 / 1000
+	return byte * (1024 ** -4)
 
 class ApiCaller():
 	host = "10.35.106.35"
