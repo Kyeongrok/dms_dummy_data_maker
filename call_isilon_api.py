@@ -12,7 +12,7 @@ class ApiCaller():
 	def __init__(self):
 		pass
 
-	def getApiResponse(query):
+	def getApiResponse(self, query):
 		# id와 pw를 바꾼다.
 		auth = str.encode("%s:%s" % ('root', 'a'))
 		user_and_pass = base64.b64encode(auth).decode("ascii")
